@@ -1,0 +1,64 @@
+package com.mariusbudin.sampleclean.features.characters.presentation
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.fragment.app.viewModels
+import com.mariusbudin.sampleclean.R
+import com.mariusbudin.sampleclean.core.extension.hide
+import com.mariusbudin.sampleclean.core.extension.loadCircle
+import com.mariusbudin.sampleclean.core.extension.show
+import com.mariusbudin.sampleclean.core.navigation.Navigator.Companion.PARAM_ID
+import com.mariusbudin.sampleclean.core.platform.BaseFragment
+import com.mariusbudin.sampleclean.core.platform.autoCleared
+import com.mariusbudin.sampleclean.databinding.CharacterDetailsFragmentBinding
+import com.mariusbudin.sampleclean.features.characters.data.model.Character
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class CharacterDetailsFragment : BaseFragment() {
+
+    private var binding: CharacterDetailsFragmentBinding by autoCleared()
+    private val viewModel: CharacterDetailsViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = CharacterDetailsFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        arguments?.getInt(PARAM_ID)?.let { viewModel.init(it) }
+        getCharacterDetails()
+    }
+
+    private fun setupObservers() {
+        viewModel.characterDetails.observe(viewLifecycleOwner, ::renderCharactersDetails)
+        viewModel.failure.observe(viewLifecycleOwner, ::handleFailure)
+    }
+
+    private fun getCharacterDetails() {
+        binding.progress.show()
+        viewModel.getCharacterDetails()
+    }
+
+    private fun renderCharactersDetails(character: Character?) {
+        binding.progress.hide()
+        character?.let {
+            binding.title.text = character.name
+            binding.status.text = character.status
+            binding.image.loadCircle(character.image)
+        }
+    }
+
+    override fun renderFailure(@StringRes message: Int) {
+        binding.progress.hide()
+        notifyWithAction(message, R.string.action_retry, ::getCharacterDetails)
+    }
+}
