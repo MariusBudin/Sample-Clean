@@ -1,6 +1,5 @@
 package com.mariusbudin.sampleclean.core.platform
 
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
