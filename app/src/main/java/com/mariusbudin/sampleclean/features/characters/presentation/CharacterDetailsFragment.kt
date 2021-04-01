@@ -1,11 +1,13 @@
 package com.mariusbudin.sampleclean.features.characters.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
+import com.mariusbudin.sampleclean.MainActivity
 import com.mariusbudin.sampleclean.R
 import com.mariusbudin.sampleclean.core.extension.hide
 import com.mariusbudin.sampleclean.core.extension.loadCircle
@@ -36,6 +38,16 @@ class CharacterDetailsFragment : BaseFragment() {
         setupObservers()
         arguments?.getInt(PARAM_ID)?.let { viewModel.init(it) }
         getCharacterDetails()
+    }
+
+    override fun onAttach(context: Context) {
+        (activity as? MainActivity)?.hideNavigation()
+        super.onAttach(context)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        (activity as? MainActivity)?.showNavigation()
     }
 
     private fun setupObservers() {

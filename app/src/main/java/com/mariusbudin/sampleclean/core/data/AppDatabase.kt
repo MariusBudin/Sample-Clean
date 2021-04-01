@@ -6,11 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mariusbudin.sampleclean.features.characters.data.CharactersDao
 import com.mariusbudin.sampleclean.features.characters.data.model.Character
+import com.mariusbudin.sampleclean.features.episodes.data.EpisodesDao
+import com.mariusbudin.sampleclean.features.episodes.data.model.Episode
 
-@Database(entities = [Character::class], version = 1, exportSchema = false)
+@Database(entities = [Character::class, Episode::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun characterDao(): CharactersDao
+    abstract fun episodesDao(): EpisodesDao
 
     companion object {
 

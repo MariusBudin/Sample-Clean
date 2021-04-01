@@ -5,11 +5,11 @@ data class CharacterRemoteModel(
     val name: String,
     val status: Status,
     val species: String,
-    val location: LocationRemoteModel,
+    val location: CharacterLocationRemoteModel,
     val image: String
 ) {
     companion object {
-        val empty = CharacterRemoteModel(0, "", Status.unknown, "", LocationRemoteModel.empty, "")
+        val empty = CharacterRemoteModel(0, "", Status.unknown, "", CharacterLocationRemoteModel.empty, "")
     }
 }
 

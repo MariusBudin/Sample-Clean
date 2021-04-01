@@ -1,11 +1,14 @@
-package com.mariusbudin.sampleclean.features.characters.data
+package com.mariusbudin.sampleclean.features.episodes.data
 
 import com.mariusbudin.sampleclean.UnitTest
 import com.mariusbudin.sampleclean.core.exception.Failure
 import com.mariusbudin.sampleclean.core.functional.Either
 import com.mariusbudin.sampleclean.core.platform.NetworkHandler
 import com.mariusbudin.sampleclean.features.characters.data.model.Character
-import com.mariusbudin.sampleclean.features.characters.data.model.remote.*
+import com.mariusbudin.sampleclean.features.characters.data.model.remote.InfoRemoteModel
+import com.mariusbudin.sampleclean.features.episodes.data.model.Episode
+import com.mariusbudin.sampleclean.features.episodes.data.model.remote.EpisodeListRemoteModel
+import com.mariusbudin.sampleclean.features.episodes.data.model.remote.EpisodeRemoteModel
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -17,72 +20,73 @@ import org.junit.Test
 import retrofit2.Call
 import retrofit2.Response
 
-class CharactersRepositoryTest : UnitTest() {
+class EpisodesRepositoryTest : UnitTest() {
 
-    private lateinit var repository: CharactersRepository.Remote
+    private lateinit var repository: EpisodesRepository.Remote
 
     @MockK
     private lateinit var networkHandler: NetworkHandler
 
     @MockK
-    private lateinit var api: CharactersApi
+    private lateinit var api: EpisodesApi
 
     @MockK
-    private lateinit var charactersCall: Call<CharactersListRemoteModel>
+    private lateinit var episodesCall: Call<EpisodeListRemoteModel>
 
     @MockK
-    private lateinit var charactersResponse: Response<CharactersListRemoteModel>
+    private lateinit var episodesResponse: Response<EpisodeListRemoteModel>
 
     @Before
     fun setUp() {
-        repository = CharactersRepository.Remote(networkHandler, api)
+        repository = EpisodesRepository.Remote(networkHandler, api)
     }
 
     @Test
     fun `should return empty list by default`() {
         every { networkHandler.isNetworkAvailable() } returns true
-        every { charactersResponse.body() } returns null
-        every { charactersResponse.isSuccessful } returns true
-        every { charactersCall.execute() } returns charactersResponse
-        every { api.getCharacters() } returns charactersCall
+        every { episodesResponse.body() } returns null
+        every { episodesResponse.isSuccessful } returns true
+        every { episodesCall.execute() } returns episodesResponse
+        every { api.getEpisodes() } returns episodesCall
 
-        val characters = repository.getCharacters()
+        val characters = repository.getEpisodes()
 
         characters shouldEqual Either.Right(emptyList<Character>())
-        verify(exactly = 1) { api.getCharacters() }
+        verify(exactly = 1) { api.getEpisodes() }
     }
 
     @Test
     fun `should return character list from api`() {
-        val character = CharacterRemoteModel(
+        val episode = EpisodeRemoteModel(
             id = 1,
-            name = "Rick",
-            status = Status.Alive,
-            species = "human",
-            CharacterLocationRemoteModel.empty,
-            image = "fake.url"
+            name = "Pilot",
+            airDate = "",
+            episode = "",
+            characters = emptyList(),
+            url = "",
+            created = ""
         )
 
         every { networkHandler.isNetworkAvailable() } returns true
-        every { charactersResponse.body() } returns CharactersListRemoteModel(
+        every { episodesResponse.body() } returns EpisodeListRemoteModel(
             InfoRemoteModel.empty,
-            listOf(character)
+            listOf(episode)
         )
-        every { charactersResponse.isSuccessful } returns true
-        every { charactersCall.execute() } returns charactersResponse
-        every { api.getCharacters() } returns charactersCall
+        every { episodesResponse.isSuccessful } returns true
+        every { episodesCall.execute() } returns episodesResponse
+        every { api.getEpisodes() } returns episodesCall
 
-        val characters = repository.getCharacters()
+        val characters = repository.getEpisodes()
 
-        characters shouldEqual Either.Right(listOf(Character.mapFromRemoteModel(character)))
-        verify(exactly = 1) { api.getCharacters() }
+        characters shouldEqual Either.Right(listOf(Episode.mapFromRemoteModel(episode)))
+        verify(exactly = 1) { api.getEpisodes() }
     }
 
     @Test
     fun `api should return network failure when no connection`() {
         every { networkHandler.isNetworkAvailable() } returns false
 
-        val characters = repository.getCharacters()
+        val characters = repository.getEpisodes()
 
         characters shouldBeInstanceOf Either::class.java
         characters.isLeft shouldEqual true
@@ -95,11 +99,11 @@ class CharactersRepositoryTest : UnitTest() {
     @Test
     fun `api should return server error if no successful response`() {
         every { networkHandler.isNetworkAvailable() } returns true
-        every { charactersResponse.isSuccessful } returns false
-        every { charactersCall.execute() } returns charactersResponse
-        every { api.getCharacters() } returns charactersCall
+        every { episodesResponse.isSuccessful } returns false
+        every { episodesCall.execute() } returns episodesResponse
+        every { api.getEpisodes() } returns episodesCall
 
-        val characters = repository.getCharacters()
+        val characters = repository.getEpisodes()
 
         characters shouldBeInstanceOf Either::class.java
         characters.isLeft shouldEqual true
@@ -111,10 +115,10 @@ class CharactersRepositoryTest : UnitTest() {
     @Test
     fun `request should catch exceptions`() {
         every { networkHandler.isNetworkAvailable() } returns true
-        every { charactersCall.execute() } returns charactersResponse
-        every { api.getCharacters() } returns charactersCall
+        every { episodesCall.execute() } returns episodesResponse
+        every { api.getEpisodes() } returns episodesCall
 
-        val characters = repository.getCharacters()
+        val characters = repository.getEpisodes()
 
         characters shouldBeInstanceOf Either::class.java
         characters.isLeft shouldEqual true

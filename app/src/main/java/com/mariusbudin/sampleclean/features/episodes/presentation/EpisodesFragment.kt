@@ -1,4 +1,4 @@
-package com.mariusbudin.sampleclean.features.characters.presentation
+package com.mariusbudin.sampleclean.features.episodes.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,16 +12,17 @@ import com.mariusbudin.sampleclean.core.extension.hide
 import com.mariusbudin.sampleclean.core.platform.BaseFragment
 import com.mariusbudin.sampleclean.core.platform.autoCleared
 import com.mariusbudin.sampleclean.databinding.GenericListFragmentBinding
-import com.mariusbudin.sampleclean.features.characters.data.model.Character
+import com.mariusbudin.sampleclean.features.episodes.data.model.Episode
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class CharactersFragment : BaseFragment() {
+class EpisodesFragment : BaseFragment() {
 
     private var binding: GenericListFragmentBinding by autoCleared()
-    private val viewModel: CharactersViewModel by viewModels()
+    private val viewModel: EpisodesViewModel by viewModels()
 
-    private lateinit var adapter: CharactersAdapter
+    private lateinit var adapter: EpisodesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,32 +36,32 @@ class CharactersFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupObservers()
-        getCharacters()
+        getEpisodes()
     }
 
     private fun setupRecyclerView() {
-        adapter = CharactersAdapter { navigator.navigateToCharacterDetails(this, it) }
+        adapter = EpisodesAdapter { Timber.d("Clicked episode id $it") }
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = adapter
     }
 
     private fun setupObservers() {
-        viewModel.characters.observe(viewLifecycleOwner, ::renderCharacters)
+        viewModel.episodes.observe(viewLifecycleOwner, ::renderEpisodes)
         viewModel.failure.observe(viewLifecycleOwner, ::handleFailure)
     }
 
-    private fun getCharacters() {
+    private fun getEpisodes() {
         binding.progress.hide()
-        viewModel.getCharacters()
+        viewModel.getEpisodes()
     }
 
-    private fun renderCharacters(characters: List<Character>?) {
-        adapter.submitList(characters)
+    private fun renderEpisodes(episodes: List<Episode>?) {
+        adapter.submitList(episodes)
         binding.progress.hide()
     }
 
     override fun renderFailure(@StringRes message: Int) {
         binding.progress.hide()
-        notifyWithAction(message, R.string.action_retry, ::getCharacters)
+        notifyWithAction(message, R.string.action_retry, ::getEpisodes)
     }
 }
