@@ -27,7 +27,5 @@ class BaseRepository {
         }
     }
 
-    open class Local(private val context: Context) {
-
-    }
+    open class Local(private val context: Context)
 }
