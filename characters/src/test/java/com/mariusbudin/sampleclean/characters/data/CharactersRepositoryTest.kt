@@ -1,8 +1,12 @@
 package com.mariusbudin.sampleclean.characters.data
 
-import com.mariusbudin.sampleclean.UnitTest
+import com.mariusbudin.sampleclean.characters.UnitTest
 import com.mariusbudin.sampleclean.characters.data.model.Character
-import com.mariusbudin.sampleclean.characters.data.model.remote.*
+import com.mariusbudin.sampleclean.characters.data.model.remote.CharacterLocationRemoteModel
+import com.mariusbudin.sampleclean.characters.data.model.remote.CharacterRemoteModel
+import com.mariusbudin.sampleclean.characters.data.model.remote.CharactersListRemoteModel
+import com.mariusbudin.sampleclean.characters.data.model.remote.Status
+import com.mariusbudin.sampleclean.core.data.model.remote.InfoRemoteModel
 import com.mariusbudin.sampleclean.core.exception.Failure
 import com.mariusbudin.sampleclean.core.functional.Either
 import com.mariusbudin.sampleclean.core.platform.NetworkHandler

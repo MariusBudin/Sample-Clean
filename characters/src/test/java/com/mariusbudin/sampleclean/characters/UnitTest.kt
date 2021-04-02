@@ -1,4 +1,4 @@
-package com.mariusbudin.sampleclean
+package com.mariusbudin.sampleclean.characters
 
 import org.junit.Rule
 

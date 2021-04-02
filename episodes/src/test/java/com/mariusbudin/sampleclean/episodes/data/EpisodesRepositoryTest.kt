@@ -1,10 +1,10 @@
 package com.mariusbudin.sampleclean.episodes.data
 
-import com.mariusbudin.sampleclean.UnitTest
 import com.mariusbudin.sampleclean.core.data.model.remote.InfoRemoteModel
 import com.mariusbudin.sampleclean.core.exception.Failure
 import com.mariusbudin.sampleclean.core.functional.Either
 import com.mariusbudin.sampleclean.core.platform.NetworkHandler
+import com.mariusbudin.sampleclean.episodes.UnitTest
 import com.mariusbudin.sampleclean.episodes.data.model.Episode
 import com.mariusbudin.sampleclean.episodes.data.model.remote.EpisodeListRemoteModel
 import com.mariusbudin.sampleclean.episodes.data.model.remote.EpisodeRemoteModel

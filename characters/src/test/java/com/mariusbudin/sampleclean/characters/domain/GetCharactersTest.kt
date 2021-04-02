@@ -1,6 +1,6 @@
 package com.mariusbudin.sampleclean.characters.domain
 
-import com.mariusbudin.sampleclean.UnitTest
+import com.mariusbudin.sampleclean.characters.UnitTest
 import com.mariusbudin.sampleclean.characters.data.CharactersRepository
 import com.mariusbudin.sampleclean.characters.data.model.Character
 import com.mariusbudin.sampleclean.core.domain.UseCase

@@ -1,4 +1,4 @@
-package com.mariusbudin.sampleclean
+package com.mariusbudin.sampleclean.episodes
 
 import io.mockk.MockKAnnotations
 import org.junit.rules.TestRule

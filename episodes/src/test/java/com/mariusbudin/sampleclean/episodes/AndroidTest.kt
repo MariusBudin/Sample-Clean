@@ -1,4 +1,4 @@
-package com.mariusbudin.sampleclean
+package com.mariusbudin.sampleclean.episodes
 
 import android.app.Application
 import android.content.Context

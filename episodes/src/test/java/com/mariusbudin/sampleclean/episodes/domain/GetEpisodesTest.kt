@@ -1,8 +1,8 @@
 package com.mariusbudin.sampleclean.episodes.domain
 
-import com.mariusbudin.sampleclean.UnitTest
 import com.mariusbudin.sampleclean.core.domain.UseCase
 import com.mariusbudin.sampleclean.core.functional.Either
+import com.mariusbudin.sampleclean.episodes.UnitTest
 import com.mariusbudin.sampleclean.episodes.data.EpisodesRepository
 import com.mariusbudin.sampleclean.episodes.data.model.Episode
 import io.mockk.every

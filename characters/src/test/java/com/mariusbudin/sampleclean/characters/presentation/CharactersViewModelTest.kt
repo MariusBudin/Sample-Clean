@@ -1,6 +1,6 @@
 package com.mariusbudin.sampleclean.characters.presentation
 
-import com.mariusbudin.sampleclean.AndroidTest
+import com.mariusbudin.sampleclean.characters.AndroidTest
 import com.mariusbudin.sampleclean.characters.data.model.Character
 import com.mariusbudin.sampleclean.characters.data.model.remote.Status
 import com.mariusbudin.sampleclean.characters.domain.GetCharacters

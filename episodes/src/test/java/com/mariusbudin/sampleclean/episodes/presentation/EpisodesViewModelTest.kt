@@ -1,7 +1,7 @@
 package com.mariusbudin.sampleclean.episodes.presentation
 
-import com.mariusbudin.sampleclean.AndroidTest
 import com.mariusbudin.sampleclean.core.functional.Either
+import com.mariusbudin.sampleclean.episodes.AndroidTest
 import com.mariusbudin.sampleclean.episodes.data.model.Episode
 import com.mariusbudin.sampleclean.episodes.domain.GetEpisodes
 import io.mockk.coEvery
