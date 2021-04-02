@@ -11,10 +11,10 @@ class Navigator {
         fragment: Fragment,
         characterId: Int
     ) {
-        fragment.findNavController().navigate(
-            R.id.action_charactersFragment_to_characterDetailFragment,
-            bundleOf(PARAM_ID to characterId)
-        )
+//        fragment.findNavController().navigate(
+//            R.id.action_charactersFragment_to_characterDetailFragment,
+//            bundleOf(PARAM_ID to characterId)
+//        )
     }
 
     companion object {

@@ -2,7 +2,6 @@ package com.mariusbudin.sampleclean.core.di
 
 import android.content.Context
 import com.mariusbudin.sampleclean.BuildConfig
-import com.mariusbudin.sampleclean.core.data.AppDatabase
 import com.mariusbudin.sampleclean.core.navigation.Navigator
 import com.mariusbudin.sampleclean.core.platform.NetworkHandler
 import dagger.Module
@@ -44,11 +43,6 @@ object AppModule {
     @Provides
     fun provideNetworkHandler(@ApplicationContext appContext: Context) =
         NetworkHandler(appContext)
-
-    @Singleton
-    @Provides
-    fun provideDatabase(@ApplicationContext appContext: Context) =
-        AppDatabase.getDatabase(appContext)
 
     @Singleton
     @Provides

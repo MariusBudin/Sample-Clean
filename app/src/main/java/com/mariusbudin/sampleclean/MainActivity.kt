@@ -2,16 +2,14 @@ package com.mariusbudin.sampleclean
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mariusbudin.sampleclean.core.extension.hide
 import com.mariusbudin.sampleclean.core.extension.show
 import com.mariusbudin.sampleclean.databinding.MainActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,26 +21,47 @@ class MainActivity : AppCompatActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment: NavHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController: NavController = navHostFragment.navController
-        binding.bottomNavigationView.setupWithNavController(navController)
+        getEpisodesFragment()?.let { showFragment(it) }
 
-        val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.charactersFragment, R.id.episodesFragment))
-        setupActionBarWithNavController(navHostFragment.navController, appBarConfiguration)
+        val navigationItemSelectedListener =
+            BottomNavigationView.OnNavigationItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.charactersFragment -> {
+                        getCharactersFragment()?.let { showFragment(it) }
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.episodesFragment -> {
+                        getEpisodesFragment()?.let { showFragment(it) }
+                        return@OnNavigationItemSelectedListener true
+                    }
+                }
+                false
+            }
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(
+            navigationItemSelectedListener
+        )
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp() || super.onSupportNavigateUp()
+    private fun getCharactersFragment() =
+        Class.forName("com.mariusbudin.sampleclean.characters.presentation.CharactersFragment")
+            .newInstance() as? Fragment
+
+    private fun getEpisodesFragment() =
+        Class.forName("com.mariusbudin.sampleclean.episodes.presentation.EpisodesFragment")
+            .newInstance() as? Fragment
+
+    private fun showFragment(fragment: Fragment) {
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
-    internal fun hideNavigation() {
+    fun hideNavigation() {
         binding.bottomNavigationView.hide()
     }
 
-    internal fun showNavigation() {
+    fun showNavigation() {
         binding.bottomNavigationView.show()
     }
 }

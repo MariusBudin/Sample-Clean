@@ -7,13 +7,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.mariusbudin.sampleclean.R
 import com.mariusbudin.sampleclean.core.exception.Failure
-import com.mariusbudin.sampleclean.core.navigation.Navigator
-import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
-
-    @Inject
-    lateinit var navigator: Navigator
 
     abstract fun renderFailure(@StringRes message: Int)
 
@@ -31,7 +26,7 @@ abstract class BaseFragment : Fragment() {
     internal fun notify(message: String) =
         Snackbar.make(container(), message, Snackbar.LENGTH_SHORT).show()
 
-    internal fun notifyWithAction(
+    fun notifyWithAction(
         @StringRes message: Int,
         @StringRes actionText: Int,
         action: () -> Any
