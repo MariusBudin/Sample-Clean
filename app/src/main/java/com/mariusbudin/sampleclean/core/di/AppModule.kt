@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    private const val API_BASE_URL = "https://rickandmortyapi.com/api/"
+    const val API_BASE_URL = "https://rickandmortyapi.com/api/"
 
     @Singleton
     @Provides
@@ -29,7 +29,7 @@ object AppModule {
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 
-    private fun createClient(): OkHttpClient {
+    fun createClient(): OkHttpClient {
         val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
             val loggingInterceptor =

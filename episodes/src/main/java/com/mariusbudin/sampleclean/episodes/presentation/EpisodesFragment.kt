@@ -5,21 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mariusbudin.sampleclean.R
+import com.mariusbudin.sampleclean.core.di.AppModule
 import com.mariusbudin.sampleclean.core.extension.hide
 import com.mariusbudin.sampleclean.core.platform.BaseFragment
+import com.mariusbudin.sampleclean.core.platform.NetworkHandler
 import com.mariusbudin.sampleclean.core.platform.autoCleared
 import com.mariusbudin.sampleclean.databinding.GenericListFragmentBinding
+import com.mariusbudin.sampleclean.episodes.data.EpisodesApi
+import com.mariusbudin.sampleclean.episodes.data.EpisodesRepository
 import com.mariusbudin.sampleclean.episodes.data.model.Episode
-import dagger.hilt.android.AndroidEntryPoint
+import com.mariusbudin.sampleclean.episodes.domain.GetEpisodes
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 
 class EpisodesFragment : BaseFragment() {
 
     private var binding: GenericListFragmentBinding by autoCleared()
-    private val viewModel: EpisodesViewModel by viewModels()
+    private lateinit var viewModel: EpisodesViewModel
 
     private lateinit var adapter: EpisodesAdapter
 
@@ -33,6 +37,26 @@ class EpisodesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //FIXME remove this and use injection, testing to see if the issue is with Hilt
+        /////////////////
+        viewModel = EpisodesViewModel(
+            GetEpisodes(
+                EpisodesRepository(
+                    EpisodesRepository.Remote(
+                        NetworkHandler(requireContext()), EpisodesApi.Service(
+                            Retrofit.Builder()
+                                .baseUrl(AppModule.API_BASE_URL)
+                                .client(AppModule.createClient())
+                                .addConverterFactory(MoshiConverterFactory.create())
+                                .build()
+                        )
+                    ), EpisodesRepository.Local()
+                )
+            )
+        )
+        /////////////////
+
         setupRecyclerView()
         setupObservers()
         getEpisodes()
