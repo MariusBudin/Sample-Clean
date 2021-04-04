@@ -1,9 +1,9 @@
 package com.mariusbudin.sampleclean.data.common.di
 
 import android.content.Context
+import com.mariusbudin.sampleclean.data.BuildConfig
 import com.mariusbudin.sampleclean.data.common.AppDatabase
 import com.mariusbudin.sampleclean.data.common.platform.NetworkHandler
-import com.mariusbudin.sampleclean.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
