@@ -41,6 +41,9 @@ android {
 dependencies {
     implementation project(':core')
     implementation project(':domain')
+    //Workaround for Hilt as it cannot build the dependency graph well with modules it can't see.
+    // This module should not "see" data module
+    implementation project(':data')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
