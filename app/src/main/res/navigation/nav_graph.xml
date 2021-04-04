@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.mariusbudin.sampleclean.features.characters.presentation.CharactersFragment"
+        android:name="com.mariusbudin.sampleclean.presentation.characters.CharactersFragment"
         android:label="@string/characters_title"
         tools:layout="@layout/generic_list_fragment">
         <action
@@ -17,12 +17,12 @@
     </fragment>
     <fragment
         android:id="@+id/characterDetailsFragment"
-        android:name="com.mariusbudin.sampleclean.features.characters.presentation.CharacterDetailsFragment"
+        android:name="com.mariusbudin.sampleclean.presentation.characters.CharacterDetailsFragment"
         android:label="@string/episodes_details_title"
         tools:layout="@layout/character_details_fragment" />
     <fragment
         android:id="@+id/episodesFragment"
-        android:name="com.mariusbudin.sampleclean.features.episodes.presentation.EpisodesFragment"
+        android:name="com.mariusbudin.sampleclean.presentation.episodes.EpisodesFragment"
         android:label="@string/episodes_title"
         tools:layout="@layout/generic_list_fragment" />
 </navigation>
